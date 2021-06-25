@@ -1,23 +1,28 @@
 import React, { Component } from 'react';
 import './App.css';
-// import ph from './components/ph'
 
-class App extends Component {
+export default class App extends Component {
 
   constructor() {
     super();
     this.state = {
-      Search: "cats",
+      Search: "Recent",
       pageNo: 1000,
       pictures: [],
     };
   }
 
   componentDidMount() {
+    this.LoadImages();
+  }
 
+  LoadImages = () => {
     const key = '36f2bcfe9679e769f97297635a7c23e8';
+    const Def_URL = 'https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + key + '&format=json&nojsoncallback=1';
+    const Search_Val = '&tags= ' + this.state.Search;
+    const PageNo_Val = this.state.pageNo
 
-    fetch('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + key + '&tags=' + this.state.Search + '&per_page=' + this.state.pageNo + '&format=json&nojsoncallback=1')
+    fetch(Def_URL + Search_Val + '&per_page' + PageNo_Val)
       .then(function (response) {
         return response.json();
       })
@@ -34,25 +39,52 @@ class App extends Component {
       }.bind(this))
   }
 
+  HandleChange = (e) => {
+    this.setState({ Search: e.target.value });
+  }
+
+  Delay = (function () {
+    var timer = 0;
+    return function (callback, ms) {
+      clearTimeout(timer);
+      timer = setTimeout(callback, ms);
+    };
+  })();
+
+
+  // availablescrollArea = (function () {
+  //   return getScrollTop() < getDocumentHeight() - window.innerHeight;
+  // })
+
+
   render() {
     return (
 
       <div className="App">
-        
+
         <header className="App-header">
 
           <h1>Search Photos</h1>
-          <input type="text" className="search-bar" id="searchbar" placeholder="Search Photos" value={this.state.Search} />
-        
+
+          <p>
+            <input
+              className="search-bar"
+              onChange={this.HandleChange}
+              placeholder="Search Photos"
+              onKeyUp={() => this.Delay(function () {
+                this.LoadImages();
+              }.bind(this), 100)} >
+            </input>
+          </p>
+
         </header>
 
         <div className="Images">
-
           {this.state.picture}
-
         </div>
+
       </div>
+
     );
   }
 }
-export default App;

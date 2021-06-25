@@ -1,0 +1,28 @@
+.taskbar
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 40%;
+    width: 100%;
+    background-color: #000;
+}
+
+.search-bar
+{
+    margin-bottom: 20px;
+    margin-top: 0px;
+    border: 6px solid #fff;
+    border-radius: 10px;
+    height: 30px;
+    width: 40%;
+}
+
+h1{
+
+    font-size: 30px;
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+}
