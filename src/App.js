@@ -1,5 +1,4 @@
-import logo from './logo.svg';
-import React, { useEffect, useState, Component } from 'react';
+import React, { Component } from 'react';
 import './App.css';
 // import ph from './components/ph'
 
@@ -17,7 +16,7 @@ class App extends Component {
   componentDidMount() {
 
     const key = '36f2bcfe9679e769f97297635a7c23e8';
-    
+
     fetch('https://api.flickr.com/services/rest/?method=flickr.photos.search&api_key=' + key + '&tags=' + this.state.Search + '&per_page=' + this.state.pageNo + '&format=json&nojsoncallback=1')
       .then(function (response) {
         return response.json();
@@ -39,7 +38,7 @@ class App extends Component {
     return (
 
       <div className="App">
-
+        
         <header className="App-header">
 
           <h1>Search Photos</h1>
